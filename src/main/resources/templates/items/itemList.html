@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header" />
+
+    <body>
+
+        <div class="container">
+
+        <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+        <div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>상품명</th>
+                    <th>가격</th>
+                    <th>재고수량</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${items}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.price}"></td>
+                    <td th:text="${item.stockQuantity}"></td>
+                    <td>
+<!--                        {id}에서 id값은 (id=${item.id})로 정해줌-->
+<!--                        그 행에서의 item id값을 {id}에다 대입하는, 예를 들어 1이면-->
+<!--                        item/1/edit 이 url 링크로 가는-->
+                        <a href="#" th:href="@{/items/{id}/edit (id=${item.id})}"
+                           class="btn btn-primary" role="button">수정</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div th:replace="fragments/footer :: footer"/>
+
+    </div> <!-- /container -->
+
+    </body>
+
+</html>

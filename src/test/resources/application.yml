@@ -1,0 +1,39 @@
+#테스트를 병렬로 여러 개 돌리거나 외부에 DB를 설치해서 돌리면 귀찮음
+#테스트라는건 끝나면 초기화되는게 좋음
+#완전히 격리된 환경, 자바 띄울 떄 자바 안에 살짝 db를 새로 만들어 띄우는
+#이게 메모리 DB인데 스프링 부트 쓰면 가능
+#test 폴더에도 야믈 파일 만들면 그게 더 우선권
+#build.gradle 에 h2 있으면 클라이언트 역할 뿐만 아니라 메모리모드로 db를 잡음
+#jvm 안에서 띄움
+#테스트랑 운영의 설정은 다르게 하는게 좋다
+
+#코드는 사실 필요없음, 스프링부트는 별도의 설정을 안해주면 메모리모드로 돌림
+#스프링 부트는 datasource 설정이 없으면, 기본적을 메모리 DB를 사용하고,
+#driver-class도 현재 등록된 라이브러를 보고 찾아준다. 추가로 ddl-auto 도 create-drop 모드로 동작한다.
+#따라서 데이터소스나, JPA 관련된 별도의 추가 설정을 하지 않아도 된다.
+spring:
+
+  datasource:
+    #테스트용 설정 파일, db띄우지않고
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      #자동으로 테이블 만들어주는 모드
+      ddl-auto: create-drop
+    #hibernate와 관련된 특정한 property 쓸 수 있음
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+
+#로깅 레벨 정하는
+logging.level:
+    #hibernate.SQL로그를 debug로 쓰는 show_sql sout로 이건 로거를 통해
+    org.hibernate.SQL: debug
+    #insert문 밑 오른쪽 몇번 파라미터가 무슨타입 무슨객체가 들어갔는지
+    org:hibernate:type: trace
+

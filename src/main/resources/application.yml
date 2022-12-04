@@ -1,0 +1,30 @@
+spring:
+
+  datasource:
+    #여러 개가 한번에 접근했을때 처리가 됨
+#    url: jdbc:h2:tcp://localhost/~/jpashop
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+
+    url: jdbc:mysql://localhost:3306/jpashop?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      #자동으로 테이블 만들어주는 모드
+      ddl-auto: create
+    #hibernate와 관련된 특정한 property 쓸 수 있음
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+
+#로깅 레벨 정하는
+logging.level:
+    #hibernate.SQL로그를 debug로 쓰는 show_sql sout로 이건 로거를 통해
+    org.hibernate.SQL: debug
+    #insert문 밑 오른쪽 몇번 파라미터가 무슨타입 무슨객체가 들어갔는지
+    org:hibernate:type: trace
